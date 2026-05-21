@@ -11,13 +11,9 @@ const config: Config = {
     v4: true,
   },
 
-  // For local development this is fine.
-  // For GitHub Pages later:
-  // url: 'https://momenTUM-research-platform.github.io'
-  // baseUrl: '/momenTUM-documentation/'
   url: 'https://momenTUM-research-platform.github.io',
-  baseUrl: '/',
-
+  baseUrl: '/momenTUM-documentation/',
+  
   organizationName: 'momenTUM-research-platform',
   projectName: 'momenTUM-documentation',
 
