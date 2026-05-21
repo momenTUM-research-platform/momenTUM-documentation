@@ -1,0 +1,203 @@
+---
+sidebar_position: 1
+title: Example Response Data
+---
+
+# Example Response Data
+
+momenTUM uses stable identifiers to connect the study JSON, the mobile app, submitted response data, and researcher-facing dashboard views.
+
+The key idea is:
+
+```text
+question.id in JSON
+→ rendered input in the mobile app
+→ participant answer
+→ response field in submitted data
+→ dashboard / REDCap / analysis variable
+```
+
+## Example question in the study JSON
+
+This example defines a slider question in a survey module.
+
+```json
+{
+  "type": "slider",
+  "id": "energy_level",
+  "text": "How energetic do you feel?",
+  "required": true,
+  "min": 0,
+  "max": 10,
+  "hint_left": "Not energetic",
+  "hint_right": "Very energetic"
+}
+```
+
+The important field is `id`.
+
+Here, the question ID is:
+
+```text
+energy_level
+```
+
+This ID is later used as the response key.
+
+## Raw response shape
+
+A submitted survey response contains study/module metadata and a `responses` object.
+
+```json
+{
+  "data_type": "survey_response",
+  "user_id": "demo_user_001",
+  "study_id": "example_study_v3",
+  "module_index": 0,
+  "platform": "ios",
+  "module_id": "example_module",
+  "module_name": "Example Module",
+  "response_time": "2025-09-05T10:35:00Z",
+  "alert_time": "2025-09-05T10:30:00Z",
+  "responses": {
+    "energy_level": 7,
+    "sleep_notes": "I woke up once during the night.",
+    "took_medication": true
+  }
+}
+```
+
+The `responses` object maps question IDs to participant answers.
+
+```text
+"energy_level": 7
+```
+
+means that the participant answered `7` for the question with ID `energy_level`.
+
+## Labeled response shape
+
+For dashboard display, responses can also be enriched with question labels.
+
+```json
+{
+  "data_type": "survey_response",
+  "user_id": "demo_user_001",
+  "study_id": "example_study_v3",
+  "module_index": 0,
+  "platform": "ios",
+  "module_id": "example_module",
+  "module_name": "Example Module",
+  "response_time": "2025-09-05T10:35:00Z",
+  "alert_time": "2025-09-05T10:30:00Z",
+  "responses": {
+    "energy_level": 7,
+    "sleep_notes": "I woke up once during the night.",
+    "took_medication": true
+  },
+  "answers": [
+    {
+      "question_id": "energy_level",
+      "question_text": "How energetic do you feel?",
+      "answer": 7
+    },
+    {
+      "question_id": "sleep_notes",
+      "question_text": "How did you sleep?",
+      "answer": "I woke up once during the night."
+    },
+    {
+      "question_id": "took_medication",
+      "question_text": "Did you take your medication today?",
+      "answer": true
+    }
+  ]
+}
+```
+
+The `answers` list is useful for display because it connects the stored response value back to the human-readable question text.
+
+## Mapping from JSON to data
+
+| Study JSON field | Meaning in response data |
+|---|---|
+| `properties.study_id` | identifies the study |
+| `modules[].id` | identifies the completed module |
+| `modules[].name` | can be used as a readable module label |
+| `sections[].id` | can identify the survey section |
+| `questions[].id` | becomes the response key |
+| `questions[].text` | can be used as the readable question label |
+| participant answer | becomes the response value |
+
+## Why this matters
+
+Stable IDs allow the same study definition to be interpreted across the whole platform.
+
+```text
+Designer
+→ creates JSON with stable IDs
+
+Mobile app
+→ renders questions and submits responses using those IDs
+
+Backend
+→ stores response objects
+
+Dashboard
+→ maps response IDs back to question labels and visual views
+
+Analysis / REDCap
+→ interprets response variables
+```
+
+This is why changing visual design is usually safer than changing IDs or response structure.
+
+## Dashboard examples
+
+The dashboard provides researcher-facing views for inspecting study response data.
+
+It can show which studies are available to a researcher, filter responses by participant/module/time range, display responses in calendar-style views, summarise completion/adherence, and render selected response data as visualisations.
+
+<div className="dashboard-screenshot-grid">
+
+  <figure className="dashboard-screenshot-card">
+    <img src="/img/dashboard-screenshots/01-dashboard-studies.png" alt="momenTUM dashboard study selection view" />
+    <figcaption>
+      <strong>Study selection</strong>
+      <span>Researchers can access assigned studies and open study-specific response views.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="dashboard-screenshot-card">
+    <img src="/img/dashboard-screenshots/02-dashboard-filters.png" alt="momenTUM dashboard filters view" />
+    <figcaption>
+      <strong>Filtering and display mode</strong>
+      <span>Responses can be filtered by user, mapped IDs, modules, and time range.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="dashboard-screenshot-card">
+    <img src="/img/dashboard-screenshots/03-dashboard-calendar.png" alt="momenTUM dashboard calendar response view" />
+    <figcaption>
+      <strong>Calendar view</strong>
+      <span>Submitted modules can be organised by date, participant, and module type to make longitudinal response patterns easier to inspect.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="dashboard-screenshot-card">
+    <img src="/img/dashboard-screenshots/04-dashboard-adherence.png" alt="momenTUM dashboard adherence view" />
+    <figcaption>
+      <strong>Adherence overview</strong>
+      <span>Completion summaries help researchers compare expected and completed tasks across participants and modules.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="dashboard-screenshot-card">
+    <img src="/img/dashboard-screenshots/05-dashboard-sleep-viz-stats.png" alt="momenTUM dashboard sleep visualisation" />
+    <figcaption>
+      <strong>Domain-specific visualisation</strong>
+      <span>Some response data can be transformed into specialised visualisations, such as sleep timing and duration summaries.</span>
+    </figcaption>
+  </figure>
+
+</div>

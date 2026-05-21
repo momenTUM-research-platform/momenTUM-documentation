@@ -1,0 +1,190 @@
+{
+    "_id": {
+      "$oid": "68bae42b19255842829a6767"
+    },
+    "_type": "study",
+    "properties": {
+      "_type": "properties",
+      "study_name": "Example study V3",
+      "study_id": "example_study_v3",
+      "created_by": "Jane Doe",
+      "instructions": "Thank you for participating in our research study!",
+      "post_url": "https://designer.momentumresearch.eu/api/v2",
+      "empty_msg": "You have completed all tasks.",
+      "banner_url": "https://images.squarespace-cdn.com/content/v1/63af1c0f40e7e215578e41f6/efab725e-88d8-4f49-b270-1d0bdcde9379/logo.png?format=1500w",
+      "support_url": "https://researchstudy.com/support",
+      "support_email": "support@researchstudy.com",
+      "cache": false,
+      "ethics": "This study has been approved by the ethics committee.",
+      "pls": "https://researchstudy.com/pls-file-link.pdf",
+      "conditions": []
+    },
+    "modules": [
+      {
+        "_type": "module",
+        "id": "668iz31tqbpitfqj",
+        "name": "Example Module",
+        "condition": "*",
+        "alerts": {
+          "scheduleMode": "relative",
+          "offsetDays": 0,
+          "offsetTime": "00:03:00",
+          "expectedEnrollmentDate": "2025-09-05",
+          "title": "Example module",
+          "message": "These are examples of inputs you can use in a survey.",
+          "repeat": "never",
+          "interval": 1,
+          "repeatCount": 0,
+          "random": false,
+          "randomInterval": 0,
+          "sticky": false,
+          "stickyLabel": "Example module",
+          "timeout": false,
+          "timeoutAfter": 0,
+          "times": []
+        },
+        "graph": {
+          "display": false
+        },
+        "unlock_after": [],
+        "params": {
+          "type": "survey",
+          "submit_text": "Submit",
+          "id": "rke482gxprn8maii",
+          "sections": [
+            {
+              "_type": "section",
+              "id": "omu5779hatkn087r",
+              "name": "Example Section",
+              "shuffle": false,
+              "questions": [
+                {
+                  "_type": "question",
+                  "type": "instruction",
+                  "id": "pklmnqdkk6miupdm",
+                  "text": "Example input instruction",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "radio": true,
+                  "modal": false,
+                  "options": [
+                    "<div>   <strong>0 — No Anxiety</strong><br>   <span>I feel relaxed and calm. There is nothing preoccupying my thoughts.</span> </div>",
+                    "<div>   <strong>1 — Mild Anxiety</strong><br>   <span>I feel slight anxiety about one or two things; I can distract myself easily from these thoughts; I’m able to function normally at work or school, at home, in my hobbies, and in my social life despite these thoughts.</span> </div>",
+                    "<div>   <strong>2 — Moderate Anxiety</strong><br>   <span>I am anxious around half of the time; I have difficulty getting thoughts causing me anxiety out of my head but I am still able to distract myself from my anxious thoughts at times; I am still able to function normally at work or school, at home, in my hobbies, and in my social life.</span> </div>",
+                    "<div>   <strong>3 — Moderately Severe Anxiety</strong><br>   <span>     I am anxious most of the time; I find it difficult to distract myself from these thoughts;     this affects my concentration and focus and has started to impact my work or school, home life,     hobbies, and social life; I avoid some places or activities because of worry; I have headaches     and feel tired.   </span> </div>",
+                    "<div>   <strong>4 — Severe Anxiety</strong><br>   <span>     I am anxious almost all the time; I cannot control my anxiety levels; I cannot function in two     or more areas (work/school, home, hobbies, socialising); I feel keyed up or on edge; I cannot     leave the house due to my anxiety; I am short of breath with chest tightness or pain, have     digestive issues, feel tired, and feel tense with muscle aches and pains.   </span> </div>",
+                    "<div>   <strong>5 — Extreme Anxiety</strong><br>   <span>     I am anxious all the time; I am having a panic attack or feel like I will; I have intense physical     symptoms in my chest, digestive system, head, muscles, and joints causing significant distress; I feel paralysed; I feel something terrible is going to happen.   </span> </div>"
+                  ],
+                  "shuffle": false
+                },
+                {
+                  "_type": "question",
+                  "type": "text",
+                  "id": "nt1ingx4nspfsgim",
+                  "text": "Example input text",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "subtype": "short"
+                },
+                {
+                  "_type": "question",
+                  "type": "datetime",
+                  "id": "mypop5bw9hp6ko85",
+                  "text": "Example input datetime",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "subtype": "datetime"
+                },
+                {
+                  "_type": "question",
+                  "type": "multi",
+                  "id": "ercrpcvvj15nw3dt",
+                  "text": "Example input multi-choice",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "radio": true,
+                  "modal": false,
+                  "options": [
+                    "Option 1",
+                    "Option 2",
+                    "Option 3"
+                  ],
+                  "shuffle": false
+                },
+                {
+                  "_type": "question",
+                  "type": "slider",
+                  "id": "f6zpo0agbh6l2qma",
+                  "text": "Example input slider",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "min": 0,
+                  "max": 10,
+                  "hint_left": "Left hint",
+                  "hint_right": "Right hint"
+                },
+                {
+                  "_type": "question",
+                  "type": "media",
+                  "id": "6bxuiuw1ja5ueoxb",
+                  "text": "Example input media",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "subtype": "image",
+                  "src": "https://images.squarespace-cdn.com/content/v1/63af1c0f40e7e215578e41f6/efab725e-88d8-4f49-b270-1d0bdcde9379/logo.png?format=1500w"
+                },
+                {
+                  "_type": "question",
+                  "type": "yesno",
+                  "id": "tukea8qm1s5jpebz",
+                  "text": "Example input yes/no",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "yes_text": "Yes",
+                  "no_text": "No"
+                },
+                {
+                  "_type": "question",
+                  "type": "photo",
+                  "id": "m8366q2k5aq98tss",
+                  "text": "Example input photo",
+                  "required": true,
+                  "rand_group": "",
+                  "hide_id": "none",
+                  "hide_value": "",
+                  "hide_if": false,
+                  "subtype": "short"
+                }
+              ]
+            }
+          ],
+          "shuffle": false,
+          "_type": "params"
+        }
+      }
+    ],
+    "timestamp": {
+      "$numberLong": "1757078571239"
+    }
+  }

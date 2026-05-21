@@ -1,0 +1,281 @@
+---
+sidebar_position: 1
+title: How the Mobile App Works
+---
+
+# How the Mobile App Works
+
+The momenTUM mobile app is the participant-facing part of the platform.
+
+Participants do not interact with the study JSON directly. Instead, the app loads a study protocol and turns it into scheduled tasks, mobile screens, inputs, notifications, progress views, and response data.
+
+## Core idea
+
+```text
+Study JSON
+→ study context
+→ available modules
+→ survey / PVT screens
+→ participant responses
+→ submitted data
+```
+
+The app is not a separate hard-coded questionnaire for each study. It is a general mobile application that interprets different study definitions.
+
+## What the app reads from the study JSON
+
+At the highest level, a study contains:
+
+```text
+Study
+├── properties
+└── modules[]
+```
+
+`properties` contains the general study context, such as the study name, study ID, participant instructions, banner image, support links, ethics information, empty-task message, conditions, and response server URL.
+
+`modules` contains the participant-facing tasks. Each module defines its schedule, condition, dependencies, optional progress graph, and task content.
+
+A module can contain either:
+
+```text
+Survey
+→ sections[]
+→ questions[]
+```
+
+or:
+
+```text
+PVT
+→ trials, waiting periods, reaction timeout, result display settings
+```
+
+## Main participant flow
+
+```text
+1. Participant opens the app
+2. Participant registers or loads a study protocol
+3. The app reads the study properties and modules
+4. The app shows available or upcoming tasks
+5. Participant opens a survey or PVT module
+6. The app renders the task from the JSON definition
+7. Participant submits responses
+8. Responses are sent to the configured backend
+```
+
+## Example app screens
+
+The screenshots below show example screens from the momenTUM mobile app. They illustrate how study definitions become participant-facing screens.
+
+<div className="app-screenshot-grid">
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/01-home.png" alt="momenTUM app home screen" />
+    <figcaption>
+      <strong>Home screen</strong>
+      <span>The participant sees the active study context and main app areas.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/02-home-dark.png" alt="momenTUM app home screen in dark mode" />
+    <figcaption>
+      <strong>Dark mode</strong>
+      <span>The participant-facing interface can also be shown in a darker visual mode.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/03-module-examples.png" alt="Example modules in the momenTUM app" />
+    <figcaption>
+      <strong>Module examples</strong>
+      <span>Study modules from the JSON definition are shown as participant-facing tasks.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/04-recent-modules.png" alt="Recent modules in the momenTUM app" />
+    <figcaption>
+      <strong>Recent modules</strong>
+      <span>The app can show recently completed or currently available modules depending on the study schedule.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/05-question-types.png" alt="Question type examples in the momenTUM app" />
+    <figcaption>
+      <strong>Question types</strong>
+      <span>Survey modules can include different input types such as text, date/time, multiple choice, sliders, media, yes/no, and photos.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/06-question-types-more.png" alt="Additional question type examples in the momenTUM app" />
+    <figcaption>
+      <strong>More question types</strong>
+      <span>Each question object tells the app which participant-facing input to render.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/07-graph-module.png" alt="Progress graph in the momenTUM app" />
+    <figcaption>
+      <strong>Progress graph</strong>
+      <span>Modules can optionally define a progress graph that tracks responses to a selected question ID over time.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/08-pvt-example.png" alt="PVT example module in the momenTUM app" />
+    <figcaption>
+      <strong>PVT module</strong>
+      <span>Besides surveys, momenTUM can define PVT tasks using a different module parameter type.</span>
+    </figcaption>
+  </figure>
+
+  <figure className="app-screenshot-card">
+    <img src="/img/app-screenshots/09-pvt-task.png" alt="PVT task screen in the momenTUM app" />
+    <figcaption>
+      <strong>PVT task screen</strong>
+      <span>The app renders PVT task parameters into an interactive participant task.</span>
+    </figcaption>
+  </figure>
+
+</div>
+
+## How JSON becomes survey screens
+
+Survey modules contain sections, and sections contain questions.
+
+```text
+modules[]
+→ params
+→ sections[]
+→ questions[]
+```
+
+Each question object tells the app what kind of input to render.
+
+For example:
+
+```json
+{
+  "type": "slider",
+  "id": "energy_level",
+  "text": "How energetic do you feel?",
+  "required": true,
+  "min": 0,
+  "max": 10,
+  "hint_left": "Not energetic",
+  "hint_right": "Very energetic"
+}
+```
+
+The app can render this as a slider screen and later submit the answer under the stable question ID:
+
+```json
+{
+  "energy_level": 7
+}
+```
+
+## Survey modules
+
+A survey module contains:
+
+```text
+Survey
+├── type: "survey"
+├── shuffle
+├── submit_text
+└── sections[]
+    └── questions[]
+```
+
+The app uses this structure to render a sequence of survey sections. Each section can contain one or more questions, and each question has a `type` that determines the input component.
+
+Supported question types include:
+
+- `instruction`
+- `photo`
+- `text`
+- `yesno`
+- `datetime`
+- `multi`
+- `media`
+- `slider`
+
+## PVT modules
+
+A PVT module uses a different parameter structure:
+
+```text
+PVT
+├── type: "pvt"
+├── trials
+├── min_waiting
+├── max_waiting
+├── max_reaction
+├── show
+└── exit
+```
+
+The app uses these values to render a psychomotor vigilance task instead of a survey.
+
+## Progress graphs
+
+Each module can optionally include a `graph` configuration.
+
+The graph is not a separate module type. It is a module-level setting that tells the app whether to show a progress chart for responses to a selected question.
+
+```json
+{
+  "graph": {
+    "display": true,
+    "variable": "energy_level",
+    "title": "Energy over time",
+    "blurb": "Your recent energy ratings.",
+    "type": "line",
+    "max_points": 10
+  }
+}
+```
+
+The `variable` field refers to the ID of a question whose responses should be tracked.
+
+```text
+question.id
+→ participant response
+→ progress graph variable
+```
+
+If `display` is `false`, the module does not show a progress graph.
+
+## Why stable IDs matter
+
+The same IDs connect the whole system:
+
+```text
+question.id in JSON
+→ rendered input in the app
+→ participant answer
+→ submitted response field
+→ dashboard / REDCap / analysis variable
+```
+
+Changing the visual design of a screen is usually safe.
+
+Changing IDs, response structure, scheduling logic, branching logic, or submission format can affect the data pipeline and should be done carefully.
+
+## App availability
+
+The production app is distributed through the app stores.
+
+For development, the Ionic app can also be run locally in the browser:
+
+```bash
+ionic serve
+```
+
+The browser version is useful for UI development and quick inspection, but native features such as notifications, camera, filesystem access, barcode scanning, and app-store behavior may require device or emulator testing.

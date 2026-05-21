@@ -1,0 +1,72 @@
+{
+    "title": "momenTUM Study Object",
+    "type": "object",
+    "required": ["properties", "modules"],
+    "properties": {
+      "properties": {
+        "title": "Properties",
+        "description": "Stores the metadata of the study.",
+        "required": [
+          "study_name",
+          "study_id",
+          "created_by",
+          "post_url",
+          "empty_msg",
+          "banner_url",
+          "conditions",
+          "cache"
+        ],
+        "fields": {
+          "study_name": "Human-readable study name.",
+          "study_id": "Identifier sent to the server with response data.",
+          "created_by": "Creator or author of the study.",
+          "instructions": "Brief instructions shown to participants.",
+          "post_url": "URL where participant responses are sent.",
+          "empty_msg": "Message shown when no tasks are available.",
+          "banner_url": "Image displayed in the study app.",
+          "support_url": "URL for study support.",
+          "support_email": "Email for participant support.",
+          "cache": "Whether media should be cached for offline use.",
+          "ethics": "Study ethics statement.",
+          "pls": "URL to the Plain Language Statement PDF.",
+          "conditions": "List of participant conditions."
+        }
+      },
+      "modules": {
+        "title": "Modules",
+        "description": "Survey/intervention tasks delivered to participants.",
+        "required": [
+          "name",
+          "condition",
+          "alerts",
+          "graph",
+          "id",
+          "unlock_after",
+          "params"
+        ],
+        "fields": {
+          "id": "Unique lowercase identifier for the module.",
+          "name": "Displayed module name. Basic HTML is supported.",
+          "condition": "Participant condition for which the module is scheduled.",
+          "alerts": "Notification title, message, schedule, and behavior.",
+          "graph": "Optional feedback graph configuration.",
+          "unlock_after": "List of module IDs that must be completed before this module appears.",
+          "params": "Either survey parameters or PVT parameters."
+        }
+      },
+      "questions": {
+        "title": "Questions",
+        "required": ["id", "type", "text", "required"],
+        "types": [
+          "instruction",
+          "datetime",
+          "multi",
+          "text",
+          "slider",
+          "media",
+          "yesno",
+          "photo"
+        ]
+      }
+    }
+  }
