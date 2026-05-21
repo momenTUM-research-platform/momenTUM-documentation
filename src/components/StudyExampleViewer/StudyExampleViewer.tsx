@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import JsonView from '@uiw/react-json-view';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 type StudyDocument = {
   _id?: {
@@ -156,9 +157,10 @@ export default function StudyExampleViewer({ studyPath }: Props) {
   const [study, setStudy] = useState<StudyDocument | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'flow' | 'json'>('overview');
   const [error, setError] = useState<string | null>(null);
+  const resolvedStudyPath = useBaseUrl(studyPath);
 
   useEffect(() => {
-    fetch(studyPath)
+    fetch(resolvedStudyPath)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Could not load ${studyPath}`);
@@ -172,7 +174,7 @@ export default function StudyExampleViewer({ studyPath }: Props) {
       .catch((err) => {
         setError(err.message);
       });
-  }, [studyPath]);
+  }, [resolvedStudyPath]);
 
   const questionTypeCounts = useMemo(() => {
     if (!study) return {};

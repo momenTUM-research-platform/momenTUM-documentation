@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import JsonView from '@uiw/react-json-view';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 type SchemaExplorerProps = {
   schemaPath: string;
@@ -9,9 +10,10 @@ type SchemaExplorerProps = {
 export default function SchemaExplorer({ schemaPath, title = 'Schema' }: SchemaExplorerProps) {
   const [schema, setSchema] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
+  const resolvedSchemaPath = useBaseUrl(schemaPath);
 
   useEffect(() => {
-    fetch(schemaPath)
+    fetch(resolvedSchemaPath)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Could not load ${schemaPath}`);
@@ -25,7 +27,7 @@ export default function SchemaExplorer({ schemaPath, title = 'Schema' }: SchemaE
       .catch((err) => {
         setError(err.message);
       });
-  }, [schemaPath]);
+  }, [resolvedSchemaPath]);
 
   if (error) {
     return (
